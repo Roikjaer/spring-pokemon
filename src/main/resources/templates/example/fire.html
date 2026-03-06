@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>POKÉMON • BY TYPE</title>
+  <link rel="stylesheet" th:href="@{/pokemon.css}">
+  <link rel="stylesheet" href="../../static/pokemon.css">
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="brand">
+      <div class="pixel-icon" aria-hidden="true"></div>
+      <div>
+        <h1>Example: All Fire Pokemon</h1>
+        <div class="sub">FILTER BY PRIMARY TYPE</div>
+      </div>
+    </div>
+
+    <nav>
+      <a th:href="@{/pokemon}">SINGLE</a>
+      <a th:href="@{/pokemon/by-primary-type}">BY TYPE</a>
+      <a th:href="@{/pokemon/averages}">AVERAGES</a>
+      <a th:href="@{/pokemon/counts}">COUNTS</a>
+    </nav>
+  </header>
+
+
+  <div class="card">
+    <div class="row">
+      <span class="badge">TYPE</span>
+      <span class="type">
+          Fire
+        </span>
+
+      <span class="badge"
+            th:if="${firePokemons != null}"
+            th:text="${#lists.size(firePokemons)} + ' FOUND'">
+          0 FOUND
+        </span>
+    </div>
+
+    <table class="table" th:if="${firePokemons != null and !#lists.isEmpty(firePokemons)}">
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>NAME</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="p : ${firePokemons}">
+        <td th:text="${p.pokedexNumber}">25</td>
+        <td>
+          <a th:href="@{/pokemon(id=${p.pokedexNumber})}" th:text="${p.name}">PIKACHU</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+</div>
+</body>
+</html>
