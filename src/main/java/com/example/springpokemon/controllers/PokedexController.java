@@ -4,6 +4,7 @@ import com.example.springpokemon.models.Pokemon;
 import com.example.springpokemon.services.PokedexService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -19,14 +20,26 @@ public class PokedexController {
     }
 
     @GetMapping("/single")
-    public ModelAndView getSingleById(){
-        return null;
+    public ModelAndView getSingleById(@RequestParam int id){
+
+        Pokemon p = pokeService.getPokemonID(id);
+
+        ModelAndView mav = new ModelAndView("single");
+        mav.addObject("pokemon", p);
+
+        return mav;
     }
 
     @GetMapping("/all-by-primary")
-    public ModelAndView getAllByPrimaryType(){
-        //Note: Remember to also send a primary type String to the model and view
-        return null;
+    public ModelAndView getAllByPrimaryType(@RequestParam String type){
+
+        List<Pokemon> pokemon = pokeService.getAllPrimary(type);
+
+        ModelAndView mav = new ModelAndView("by-type");
+        mav.addObject("pokemons", pokemon);
+        mav.addObject("primaryType", type);
+
+        return mav;
     }
 
     @GetMapping("/count")
